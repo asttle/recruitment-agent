@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: recruitment-agent
+  labels:
+    app: recruitment-agent
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: recruitment-agent
+  template:
+    metadata:
+      labels:
+        app: recruitment-agent
+    spec:
+      containers:
+      - name: recruitment-agent
+        image: recruitment-agent:latest
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8000
+        resources:
+          limits:
+            cpu: "500m"
+            memory: "512Mi"
+          requests:
+            cpu: "100m"
+            memory: "256Mi"
+        env:
+        - name: DATABASE_URL
+          valueFrom:
+            configMapKeyRef:
+              name: recruitment-agent-config
+              key: database_url
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8000
+          initialDelaySeconds: 30
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 8000
+          initialDelaySeconds: 5
+          periodSeconds: 5
