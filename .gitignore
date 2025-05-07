@@ -46,3 +46,6 @@ kubeconfig
 
 # Docker
 .docker/
+
+# Node modules
+node_modules/
