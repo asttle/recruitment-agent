@@ -1,0 +1,17 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+- ../../base
+
+# Development-specific patches
+patchesStrategicMerge:
+- patch.yaml
+
+# Development-specific configurations
+configMapGenerator:
+- name: recruitment-agent-config
+  behavior: merge
+  literals:
+  - log_level=debug
+  - database_url=postgresql://postgres:postgres@postgres:5432/recruitment-dev

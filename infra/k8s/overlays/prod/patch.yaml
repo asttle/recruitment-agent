@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: recruitment-agent
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: recruitment-agent
+  template:
+    spec:
+      containers:
+      - name: recruitment-agent
+        imagePullPolicy: IfNotPresent
+        resources:
+          limits:
+            cpu: "1000m"
+            memory: "1Gi"
+          requests:
+            cpu: "500m"
+            memory: "512Mi"
+        env:
+        - name: SMTP_USER
+          valueFrom:
+            secretKeyRef:
+              name: recruitment-agent-secrets
+              key: smtp_user
+        - name: SMTP_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: recruitment-agent-secrets
+              key: smtp_password
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: recruitment-agent
+spec:
+  type: ClusterIP  # Change to LoadBalancer if using cloud provider

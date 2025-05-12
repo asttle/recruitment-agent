@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: recruitment-agent-config
+  labels:
+    app: recruitment-agent
+data:
+  DATABASE_URL: "postgresql://postgres:postgres@postgres:5432/recruitment"
+  LOG_LEVEL: "info"
+  SMTP_HOST: "smtp.gmail.com"
+  SMTP_PORT: "587"
+  UPLOAD_DIR: "/app/uploads"

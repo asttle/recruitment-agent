@@ -32,7 +32,27 @@ spec:
           valueFrom:
             configMapKeyRef:
               name: recruitment-agent-config
-              key: database_url
+              key: DATABASE_URL
+        - name: LOG_LEVEL
+          valueFrom:
+            configMapKeyRef:
+              name: recruitment-agent-config
+              key: LOG_LEVEL
+        - name: SMTP_HOST
+          valueFrom:
+            configMapKeyRef:
+              name: recruitment-agent-config
+              key: SMTP_HOST
+        - name: SMTP_PORT
+          valueFrom:
+            configMapKeyRef:
+              name: recruitment-agent-config
+              key: SMTP_PORT
+        - name: UPLOAD_DIR
+          valueFrom:
+            configMapKeyRef:
+              name: recruitment-agent-config
+              key: UPLOAD_DIR
         livenessProbe:
           httpGet:
             path: /health
